@@ -1,0 +1,14 @@
+/bin/
+/obj/
+/obj/Debug/
+
+/src/bin/
+/src/obj/
+/src/Debug/
+
+/src/appsettings.*
+/src/Api/appsettings.*
+
+/src/.idea
+
+/src/.env
