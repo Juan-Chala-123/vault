@@ -1,0 +1,52 @@
+services:
+  web:
+    container_name: vault-web
+    build:
+      context: ./src/Vault.Web
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./src/Vault.Web:/app
+      - /app/node_modules
+    networks:
+      - vault-network
+
+  api:
+    container_name: vault-api
+    build:
+      context: ./src/Vault.Api/src
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - AllowedOrigins=http://localhost:5173
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./src/Vault.Api/src:/app
+    networks:
+      - vault-network
+    env_file:
+      - ./src/Vault.Api/src/.env
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: vault-db
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "SqlServer2026"
+      MSSQL_DB: "VaultDb"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql-data:/var/opt/mssql
+    restart: unless-stopped
+    networks:
+      - vault-network
+
+networks:
+  vault-network:
+    driver: bridge
+
+volumes:
+  sql-data:
