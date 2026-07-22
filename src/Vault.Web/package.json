@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tabler/core": "^1.4.0",
+    "@tabler/icons-react": "^3.45.0",
     "@tailwindcss/vite": "^4.3.2",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
